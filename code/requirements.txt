@@ -8,3 +8,5 @@ scikit-learn
 ipywidgets
 wandb
 streamlit
+seaborn
+matplotlib
