@@ -11,4 +11,7 @@ output/*
 !output/.gitkeep
 code/wandb
 
+__pycache__/
+*.py[cod]
+
 *.csv
