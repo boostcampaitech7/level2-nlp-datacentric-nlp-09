@@ -18,7 +18,7 @@ def add_special_char_ratio(df, text_column="text"):
 # 예시 실행
 if __name__ == "__main__":
     # 파일 로드
-    input_path = "./data/raw/train.csv"  # 예시 파일 경로
+    input_path = "./data/preprocessed/preprocessed_train.csv"  # 예시 파일 경로
     output_path = "./data/preprocessed/with_special_char_ratio_train.csv"
     df = pd.read_csv(input_path)
     
