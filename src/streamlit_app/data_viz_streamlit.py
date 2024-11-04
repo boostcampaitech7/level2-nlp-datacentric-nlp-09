@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from transformers import AutoTokenizer
 import os
-import random
 
 # CSV 파일이 있는 디렉토리 경로
 directory_path = './data/raw'
@@ -18,6 +17,8 @@ csv_file_path = os.path.join(directory_path, selected_file)
 
 # KLUE BERT 토크나이저 로드
 tokenizer = AutoTokenizer.from_pretrained("klue/bert-base")
+
+percentiles = [0.1, 0.2, 0.8, 0.9]
 
 try:
     # 첫 번째 행을 헤더로 인식
@@ -76,6 +77,9 @@ try:
     sns.boxplot(x="target", y="text_length", data=df, ax=ax)
     ax.set_title("Text Length by Label")
     st.pyplot(fig)
+    df_description = df['text_length'].describe(percentiles=percentiles)
+    st.write("Text Length Statistics:")
+    st.write(df_description)
 
     # 토큰 수 분포 분석
     df['token_count'] = df['text'].apply(lambda x: len(tokenizer(x)["input_ids"]))
@@ -84,10 +88,34 @@ try:
     sns.histplot(df['token_count'], bins=30, kde=True, ax=ax)
     ax.set_title("Token Count Distribution")
     st.pyplot(fig)
+    df_description = df['token_count'].describe(percentiles=percentiles)
+    st.write("Token Count Statistics:")
+    st.write(df_description)
+
+    # 텍스트 또는 토큰 길이 필터링 옵션 추가
+    st.subheader("Filter by Text or Token Length")
+    filter_option = st.radio("Choose length type to filter by:", ('Text Length', 'Token Length'))
+
+    if filter_option == 'Text Length':
+        min_length, max_length = st.slider("Select text length range:", 
+                                           int(df['text_length'].min()), 
+                                           int(df['text_length'].max()), 
+                                           (int(df['text_length'].quantile(0.1)), int(df['text_length'].quantile(0.9))))
+        filtered_df = df[(df['text_length'] >= min_length) & (df['text_length'] <= max_length)]
+    else:
+        min_length, max_length = st.slider("Select token length range:", 
+                                           int(df['token_count'].min()), 
+                                           int(df['token_count'].max()), 
+                                           (int(df['token_count'].quantile(0.1)), int(df['token_count'].quantile(0.9))))
+        filtered_df = df[(df['token_count'] >= min_length) & (df['token_count'] <= max_length)]
+
+    # 필터링된 데이터 출력
+    st.write(f"Number of rows within selected range: {len(filtered_df)}")
+    st.write(filtered_df.head())
 
     # 입력한 ID의 뒷부분 숫자와 일치하는 데이터 검색
     st.subheader("Tokenization for Specific ID")
-    input_number = st.text_input("Enter the last 5 digits of the ID (e.g., 00000):")
+    input_number = st.text_input("Enter the last digits of the ID (e.g., 00000):")
     
     if input_number:
         # ID 열에서 입력한 번호와 일치하는 데이터 필터링
