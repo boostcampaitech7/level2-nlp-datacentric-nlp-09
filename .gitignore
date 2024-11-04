@@ -15,3 +15,6 @@ __pycache__/
 *.py[cod]
 
 *.csv
+
+# 특정 파일 무시
+src/streamlit_app/app.py
