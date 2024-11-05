@@ -16,5 +16,7 @@ __pycache__/
 
 *.csv
 
+mecab*
+
 # 특정 파일 무시
 src/streamlit_app/app.py
