@@ -7,7 +7,7 @@ import os
 import random
 
 # CSV 파일이 있는 디렉토리 경로
-directory_path = './data/raw'
+directory_path = './data/exp'
 
 # 디렉토리에서 CSV 파일 목록 가져오기
 csv_files = [f for f in os.listdir(directory_path) if f.endswith('.csv')]
