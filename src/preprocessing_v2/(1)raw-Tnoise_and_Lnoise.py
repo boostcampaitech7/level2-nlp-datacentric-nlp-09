@@ -1,7 +1,13 @@
 import pandas as pd
+import re
+
 
 raw = pd.read_csv('data/raw/train.csv')
-df = pd.read_csv('data/preprocessed_v2/noise_all-asterisk_all.csv')
+
+df = raw.copy()
+sub = '*'
+df['text'] = df['text'].apply(lambda x: re.sub(r'[^가-힣\s]', sub, x))
+
 
 # '*'/len ratio in text columns
 df['noise_ratio'] = df['text'].str.count('\*') / df['text'].str.len()

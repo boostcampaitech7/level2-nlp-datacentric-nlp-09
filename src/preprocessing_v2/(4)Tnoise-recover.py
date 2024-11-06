@@ -2,6 +2,7 @@ import pandas as pd
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
+import re
 
 
 # Function to create the prompt with few-shot examples
@@ -24,7 +25,9 @@ model.eval()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
-df = pd.read_csv('data/preprocessed/noise2asterisk.csv')
+df = pd.read_csv('data/preprocessed_v2/Tnoise_comp_1073.csv')
+sub = '*'
+df['text'] = df['text'].apply(lambda x: re.sub(r'[^가-힣\s]', sub, x))
 
 # Define few-shot examples
 few_shot_examples = [
@@ -140,7 +143,7 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="Generating texts"):
     # Extract the generated text after '답변:'
     generated_output = output_text.split('답변:')[-1].strip()
     generated_output = generated_output.split('\n')[0].strip()
-    
+    print(generated_output)
     # Append to the list
     generated_texts.append(generated_output)
 
@@ -149,13 +152,7 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="Generating texts"):
 # df['text_gen_original'] = original_outputs
 
 # save
-df_test = df.copy()
-df_test['text_gen'] = generated_texts
 df['text'] = generated_texts
-
-for i in range(df.shape[0]):
-    print(f"{df_test.at[i, 'ID']}\n{df_test.at[i, 'text']}\n{df_test.at[i, 'text_gen']}\n")
     
 # Save the updated DataFrame to a new CSV file
-df.to_csv('data/preprocessed/recovered_all_data.csv', index=False)
-# df_test.to_csv('data/preprocessed/asterisk2recover_Tnoise_test.csv', index=False)
+df.to_csv('data/preprocessed_v2/Tnoise_comp_recover_1073.csv', index=False)
