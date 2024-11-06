@@ -10,6 +10,7 @@ df['noise_ratio'] = df['text'].str.count('\*') / df['text'].str.len()
 df.sort_values(by='noise_ratio', ascending=True, inplace=True)
 Lnoise = df.iloc[:1200].copy()
 Tnoise = df.iloc[1200:].copy()
+Tnoise = Tnoise[Tnoise['noise_ratio'] < 0.5]
 
 Lnoise_id = Lnoise['ID'].to_list()
 Tnoise_id = Tnoise['ID'].to_list()
@@ -19,4 +20,4 @@ Tnoise_id_data = raw[raw['ID'].isin(Tnoise_id)].copy()
 
 
 Lnoise_data.to_csv('data/preprocessed/asterisk2GTandLnoise.csv', index=False)
-Tnoise_id_data.to_csv('data/preprocessed/asterisk2Tnoise.csv', index=False)
+Tnoise_id_data.to_csv('data/preprocessed/asterisk2Tnoise_HighRatioCut.csv', index=False)
