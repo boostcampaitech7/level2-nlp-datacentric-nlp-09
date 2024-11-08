@@ -9,6 +9,7 @@ data/final/*
 
 output/*
 !output/.gitkeep
-code/wandb
+
+wandb
 
 *.csv
