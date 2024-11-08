@@ -1,0 +1,20 @@
+data/raw/*
+!data/raw/.gitkeep
+data/preprocessed/*
+!data/preprocessed/.gitkeep
+data/augmented/*
+!data/augmented/.gitkeep
+data/enhanced/*
+!data/enhanced/.gitkeep
+
+output/*
+!output/.gitkeep
+code/wandb
+
+__pycache__/
+*.py[cod]
+
+*.csv
+
+# 특정 파일 무시
+src/streamlit_app/app.py
