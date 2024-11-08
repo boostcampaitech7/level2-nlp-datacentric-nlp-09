@@ -4,8 +4,9 @@ data/preprocessed/*
 !data/preprocessed/.gitkeep
 data/augmented/*
 !data/augmented/.gitkeep
-data/enhanced/*
-!data/enhanced/.gitkeep
+!data/agumented/train_llm_v1.csv
+data/final/*
+!data/final/.gitkeep
 
 output/*
 !output/.gitkeep
@@ -13,8 +14,6 @@ code/wandb
 
 __pycache__/
 *.py[cod]
-
-*.csv
 
 # 특정 파일 무시
 src/streamlit_app/app.py
