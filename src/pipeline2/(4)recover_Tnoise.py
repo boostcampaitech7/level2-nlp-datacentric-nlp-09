@@ -4,6 +4,16 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
 import re
 
+"""
+이 코드는 Text Noise 데이터에서 Noise를 제거하기 위해 Few-shot Learning을 활용하여 LLM 모델로 노이즈가 제거된 텍스트 생성을 수행하는 코드입니다.
+
+코드 설명:
+1. `AutoTokenizer`와 `AutoModelForCausalLM`을 통해 사전 학습된 언어 모델을 불러옵니다.
+2. 텍스트 데이터(`Tnoise_comp_1073.csv`)를 불러오고, '*'로 가려진 텍스트에 대한 프롬프트를 생성합니다.
+3. 사전 정의된 few-shot 예제를 기반으로 모델이 답변을 생성하도록 설정합니다.
+4. 생성된 텍스트는 DataFrame에 추가되어 최종적으로 새로운 CSV 파일(`Tnoise_comp_recover_1073.csv`)로 저장됩니다.
+"""
+
 
 # Function to create the prompt with few-shot examples
 def create_prompt(text, examples):
@@ -17,15 +27,17 @@ def create_prompt(text, examples):
     return prompt
 
 
-# 토크나이저와 모델 로드
+# Load the model and tokenizer
 tokenizer = AutoTokenizer.from_pretrained("jungyuko/DAVinCI-42dot_LLM-PLM-1.3B-v1.5.3")
 model = AutoModelForCausalLM.from_pretrained("jungyuko/DAVinCI-42dot_LLM-PLM-1.3B-v1.5.3")
 
+# Set the model to evaluation mode and move to the correct device
 model.eval()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
-df = pd.read_csv('data/preprocessed_v2/Tnoise_comp_1073.csv')
+# Load the data and preprocess
+df = pd.read_csv('data/preprocessed/Tnoise_comp_1073.csv')
 sub = '*'
 df['text'] = df['text'].apply(lambda x: re.sub(r'[^가-힣\s]', sub, x))
 
@@ -113,7 +125,6 @@ few_shot_examples = [
     }
 ]
 
-
 # List to store generated texts
 generated_texts = []
 original_outputs = []
@@ -123,17 +134,17 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="Generating texts"):
     # Create the prompt
     prompt = create_prompt(row['text'], few_shot_examples)
     
-    # Tokenize the prompt and move inputs to the correct device
+    # Tokenize the prompt
     inputs = tokenizer(prompt, return_tensors='pt').to(device)
     
     # Generate the output using the model
     outputs = model.generate(
         **inputs,
-        max_new_tokens=50,          # Adjust based on expected output length
+        max_new_tokens=50,
         num_beams=5,
         # temperature=0.2,
         # top_p=0.85,
-        do_sample=False,  # 샘플링 활성화
+        do_sample=False,
         no_repeat_ngram_size=2,
     )
     
@@ -144,15 +155,12 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="Generating texts"):
     generated_output = output_text.split('답변:')[-1].strip()
     generated_output = generated_output.split('\n')[0].strip()
     print(generated_output)
+    
     # Append to the list
     generated_texts.append(generated_output)
 
-# # Add the generated texts to the DataFrame
-# df['text_gen'] = generated_texts
-# df['text_gen_original'] = original_outputs
-
-# save
+# save the generated texts
 df['text'] = generated_texts
     
 # Save the updated DataFrame to a new CSV file
-df.to_csv('data/preprocessed_v2/Tnoise_comp_recover_1073.csv', index=False)
+df.to_csv('data/preprocessed/Tnoise_comp_recover_1073.csv', index=False)
