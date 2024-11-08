@@ -77,7 +77,7 @@ df = pd.DataFrame({
 df.to_csv(OUTPUT_DIR, index=False)
 
 # Generate headlines and save to the output file
-for i in tqdm(range(1000), desc="Generating"):
+for i in tqdm(range(30), desc="Generating"):
     # Load the augmented data
     original_df = pd.read_csv(OUTPUT_DIR)
 

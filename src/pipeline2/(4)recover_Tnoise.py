@@ -154,7 +154,6 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="Generating texts"):
     # Extract the generated text after '답변:'
     generated_output = output_text.split('답변:')[-1].strip()
     generated_output = generated_output.split('\n')[0].strip()
-    print(generated_output)
     
     # Append to the list
     generated_texts.append(generated_output)

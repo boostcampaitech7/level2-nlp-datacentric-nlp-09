@@ -49,6 +49,7 @@ BASE_DIR = os.getcwd()
 DATA_DIR = os.path.join(BASE_DIR, 'data/preprocessed/Tnoise_comp_recover_1073.csv') # Text noise recovered data
 TEST_DIR = os.path.join(BASE_DIR, 'data/preprocessed/Lnoise_and_augmented.csv') # Label noise data
 train_name = os.path.splitext(os.path.basename(DATA_DIR))[0]
+OUTPUT_MODEL_DIR = os.path.join(BASE_DIR, 'output/recover_label_v1') # save model checkpoint
 OUTPUT_DIR = os.path.join(BASE_DIR, 'data/preprocessed/Lnoise_and_augmented_recover_v1') # Output directory
 CLEAN_DIR = 'data/preprocessed/clean_data_v1.csv'
 
@@ -107,7 +108,7 @@ def compute_metrics(eval_pred):
 
 # Define training arguments
 training_args = TrainingArguments(
-    output_dir=OUTPUT_DIR,
+    output_dir=OUTPUT_MODEL_DIR,
     overwrite_output_dir=True,
     do_train=True,
     do_eval=True,
