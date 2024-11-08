@@ -16,13 +16,13 @@ def process_dataframe(df, text_column="text"):
 # 예시 실행
 if __name__ == "__main__":
     # 파일 로드
-    input_path = "./data/preprocessed/preprocessed_train_v3.csv"  # 예시 파일 경로
-    output_path = "./data/preprocessed/preprocessed_train_v4.csv"
+    input_path = "./data/preprocessed/pipeline1_step.csv"  # 예시 파일 경로
+    output_path = "./data/preprocessed/yourdata.csv"
     df = pd.read_csv(input_path)
     
-    # 20% ~ 80% 범위의 데이터 필터링
+
     filtered_df = process_dataframe(df)
     
     # 파일 저장
     filtered_df.to_csv(output_path, index=False)
-    print(f"Filtered file with special character ratio between 20% and 80% saved to {output_path}")
+    print(f"saved to {output_path}")

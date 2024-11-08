@@ -135,7 +135,7 @@ def save_with_naturalness_score(df, output_dir, filename):
 # 예시 실행
 if __name__ == "__main__":
     # 파일 로드
-    input_path = "./data/preprocessed/preprocessed_train_v2.csv"
+    input_path = "./data/raw/train.csv"
     output_dir = "./data/preprocessed"
     df = pd.read_csv(input_path)
     
@@ -143,6 +143,6 @@ if __name__ == "__main__":
     df_with_scores = add_naturalness_scores(df)
     
     # 파일 저장
-    save_with_naturalness_score(df_with_scores, output_dir, "preprocessed_train_v3.csv")
+    save_with_naturalness_score(df_with_scores, output_dir, "train_nat_bert.csv")
     print(f"Processed file saved to {output_dir}")
 

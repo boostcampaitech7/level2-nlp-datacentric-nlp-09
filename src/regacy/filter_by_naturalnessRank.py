@@ -1,6 +1,6 @@
 import pandas as pd
 
-def filter_by_naturalness_percentile(df, output_path, score_column="naturalness_score", min_percentile=0.1, max_percentile=1):
+def filter_by_naturalness_percentile(df, output_path, score_column="naturalness_score", min_percentile=0, max_percentile=0.6):
     """자연스러움 점수의 특정 분위수 범위에 해당하는 데이터를 필터링하여 저장하는 함수"""
     # 상하위 분위수 임계값 계산
     lower_threshold = df[score_column].quantile(min_percentile)
@@ -16,8 +16,8 @@ def filter_by_naturalness_percentile(df, output_path, score_column="naturalness_
 # 예시 실행
 if __name__ == "__main__":
     # 파일 로드
-    input_path = "./data/preprocessed/with_naturalness_score_preprocessed_train_v3.csv"  # 입력 파일 경로
-    output_path = "./data/preprocessed/preprocessed_train_v3.csv"
+    input_path = "./data/preprocessed/train_nat_bert_3dot_v2.csv"  # 입력 파일 경로
+    output_path = "./data/preprocessed/train_nat_bert_3dot_v3.csv"
     df = pd.read_csv(input_path)
     
     # 상위 10% 미만 자연스러움 점수 데이터 필터링 및 저장

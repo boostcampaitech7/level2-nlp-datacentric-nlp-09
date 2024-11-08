@@ -10,7 +10,7 @@ def calculate_special_char_ratio(text):
     # 특수문자 비율 계산
     return len(special_chars) / len(text) if len(text) > 0 else 0
 
-def filter_by_special_char_ratio(df, text_column="text", min_ratio=0.2, max_ratio=0.8):
+def filter_by_special_char_ratio(df, text_column="text", min_ratio=0.2, max_ratio=0.6):
     """특수문자 비율이 특정 범위에 있는 행만 필터링하는 함수"""
     filtered_df = df[df[text_column].apply(lambda x: min_ratio <= calculate_special_char_ratio(x) <= max_ratio)]
     return filtered_df
