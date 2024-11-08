@@ -10,4 +10,4 @@ df4 = pd.read_csv('data/augmented/train_llm_v3.csv')  # 네 번째 CSV 파일
 concat_df = pd.concat([df1, df2, df3, df4], ignore_index=True)
 
 # 연결된 데이터프레임을 새로운 CSV 파일로 저장
-concat_df.to_csv('data/final/train_final.csv', index=False)
+concat_df.to_csv('data/final/main_final_data.csv', index=False)
