@@ -1,0 +1,43 @@
+{
+  "os":  "Linux-5.4.0-99-generic-x86_64-with-glibc2.31",
+  "python":  "3.10.13",
+  "startedAt":  "2024-11-08T05:12:51.144613Z",
+  "program":  "/data/ephemeral/home/level2-nlp-datacentric-nlp-09/src/main/augmentation/step7_add_label.py",
+  "codePath":  "src/main/augmentation/step7_add_label.py",
+  "git":  {
+    "remote":  "git@github.com:boostcampaitech7/level2-nlp-datacentric-nlp-09.git",
+    "commit":  "0e5bdd4dc5e50211c5e3993cedd7579d7de4b47d"
+  },
+  "email":  "jekim7348@gmail.com",
+  "root":  "/data/ephemeral/home/level2-nlp-datacentric-nlp-09",
+  "host":  "instance-12939",
+  "username":  "root",
+  "executable":  "/opt/conda/bin/python",
+  "codePathLocal":  "src/main/augmentation/step7_add_label.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "gpu":  "Tesla V100-SXM2-32GB",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "52573995008",
+      "used":  "35723022336"
+    }
+  },
+  "memory":  {
+    "total":  "94903173120"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "Tesla V100-SXM2-32GB",
+      "memoryTotal":  "34359738368",
+      "cudaCores":  5120,
+      "architecture":  "Volta"
+    }
+  ],
+  "cudaVersion":  "12.2"
+}
