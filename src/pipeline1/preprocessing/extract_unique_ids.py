@@ -1,7 +1,7 @@
 import pandas as pd
 
 train_path = "./data/raw/train.csv"  # 예시 파일 경로
-csv_path = "./data/preprocessed/train_3dot_specialDel_v2.csv"
+csv_path = "./data/preprocessed/pipeline1_step2.csv"
 
 # 두 CSV 파일 읽기
 df1 = pd.read_csv(train_path)

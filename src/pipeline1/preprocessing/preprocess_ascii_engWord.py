@@ -2,6 +2,55 @@ import pandas as pd
 from collections import Counter
 import re
 
+"""
+Filters and processes text data in a CSV file based on specified word frequency and special character conditions, 
+then saves the processed data to a new CSV file.
+
+This script performs the following tasks:
+1. Loads text data from a CSV file.
+2. Identifies English words in uppercase with two or more letters and counts their frequency across the text data.
+3. Filters words that appear with a frequency of `min_frequency` or more (default is 2).
+4. Replaces special characters in the text with spaces, while preserving the filtered high-frequency words.
+5. Saves the processed text data to a new CSV file.
+
+Attributes:
+    input_csv_path (str): Path to the input CSV file containing text data.
+    output_csv_path (str): Path to the output CSV file where processed results are saved.
+
+Functions:
+    get_filtered_words(df, min_frequency=2):
+        Extracts and filters uppercase English words with a minimum frequency of `min_frequency`.
+        Args:
+            df (pd.DataFrame): The input DataFrame containing text data.
+            min_frequency (int): Minimum frequency for a word to be preserved.
+        Returns:
+            set: A set of words with frequency greater than or equal to `min_frequency`.
+
+    replace_special_chars_conditionally(text):
+        Replaces special characters in the text with spaces, preserving words in `filtered_words`.
+        Args:
+            text (str): A string of text to be processed.
+        Returns:
+            str: Processed text with special characters replaced by spaces, preserving high-frequency words.
+
+Usage:
+    Run this script to process text in a CSV file, where:
+    - High-frequency uppercase words with two or more letters are preserved.
+    - Special characters are replaced with spaces except in the preserved words.
+    The processed data is saved to `output_csv_path`.
+
+Example:
+    ```
+    python filter_and_replace_special_chars.py
+    ```
+    This will save the processed data in `output_csv_path`.
+
+Returns:
+    None
+"""
+
+
+
 # CSV 파일 경로
 input_csv_path = "./data/preprocessed/pipeline1_step3.csv"
 output_csv_path = "./data/preprocessed/pipeline1_step4.csv"
