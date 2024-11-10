@@ -4,9 +4,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from transformers import AutoTokenizer
 import os
+import re
 
 # CSV 파일이 있는 디렉토리 경로
-directory_path = './data/raw'
+directory_path = './data/preprocessed'
 
 # 디렉토리에서 CSV 파일 목록 가져오기
 csv_files = [f for f in os.listdir(directory_path) if f.endswith('.csv')]
@@ -24,31 +25,41 @@ try:
     # 첫 번째 행을 헤더로 인식
     df = pd.read_csv(csv_file_path, header=0)
 
-    # 랜덤 데이터 미리보기
-    st.subheader("Random Data Preview")
+    # 특수문자 입력 필드 추가
+    st.subheader("Filter by Special Character")
+    special_char_input = st.text_input("Enter special characters to filter (e.g., @#$)")
 
-    # 라벨과 샘플 수 입력받기
-    label_input = st.text_input("Enter a label (optional) 빈칸 시 랜덤")
+    # ASCII 비율 라벨과 샘플 수 입력받기
+    label_input = st.text_input("Enter a minimum ASCII ratio (optional)")
     sample_size_input = st.number_input("Enter the number of samples", min_value=1, max_value=len(df), value=5, step=1)
 
     # 샘플 표시 버튼 추가
     if st.button("Show Samples"):
         # 샘플 수 설정: 빈칸이면 기본값 5 적용
         sample_size = int(sample_size_input) if sample_size_input else 5
-
-        # 라벨 입력 여부에 따른 데이터 필터링
-        if label_input:
-            # 특정 라벨 필터링
-            label_data = df[df["target"] == int(label_input)]
-            if not label_data.empty:
-                st.write(label_data.sample(min(len(label_data), sample_size)))
-            else:
-                st.write(f"No data found with label {label_input}. Showing random samples instead.")
-                st.write(df.sample(sample_size))
+        
+        # 특수문자가 입력된 경우 해당 문자가 포함된 행만 필터링
+        if special_char_input:
+            # 각 특수문자를 OR 조건으로 연결하여 필터링
+            special_chars = f"[{re.escape(special_char_input)}]"
+            filtered_df = df[df['text'].str.contains(special_chars)]
         else:
-            # 라벨이 빈칸인 경우 전체 데이터에서 랜덤 샘플
-            st.write(df.sample(sample_size))
+            filtered_df = df  # 특수문자가 입력되지 않으면 전체 데이터 사용
+        
+        # ASCII 비율 기준 필터링
+        if label_input:
+            filtered_df = filtered_df[filtered_df["ascii_ratio"] >= float(label_input)]
+        
+        # 필터링된 데이터에서 샘플링
+        if not filtered_df.empty:
+            st.write(filtered_df.sample(min(len(filtered_df), sample_size)))
+        else:
+            st.write("No data found with the specified filters.")
+        
+        # 필터링된 데이터의 총 개수 출력
+        st.write(f"Number of rows within selected range: {len(filtered_df)}")
 
+    
     # 라벨 분포 시각화
     st.subheader("Label Distribution")
     label_counts = df["target"].value_counts()
@@ -61,15 +72,15 @@ try:
     sns.histplot(df['text_length'], bins=30, kde=True, ax=ax)
     ax.set_title("Text Length Distribution")
     st.pyplot(fig)
-
-    # 결측값 확인
-    st.subheader("Missing Values Check")
-    st.write(df.isnull().sum())
-
-    # 중복 데이터 확인
-    st.subheader("Duplicate Data Check")
-    duplicates = df.duplicated().sum()
-    st.write(f"Number of duplicate rows: {duplicates}")
+    
+    # 특수문자 비율에 대한 분포도 시각화
+    st.subheader("Distribution of ASCII Character Ratio (33-126)")
+    fig, ax = plt.subplots()
+    sns.histplot(df['ascii_ratio'], bins=30, kde=True, ax=ax)
+    ax.set_title("ASCII Character Ratio Distribution (33-126)")
+    ax.set_xlabel("ASCII Character Ratio")
+    ax.set_ylabel("Frequency")
+    st.pyplot(fig)
 
     # 텍스트 길이와 라벨 간 상관 관계 분석
     st.subheader("Text Length by Label")
