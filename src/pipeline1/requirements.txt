@@ -1,0 +1,13 @@
+transformers
+sentencepiece
+numpy
+pandas
+evaluate
+accelerate
+scikit-learn
+ipywidgets
+wandb
+streamlit
+seaborn
+matplotlib
+deepl==1.19.1
