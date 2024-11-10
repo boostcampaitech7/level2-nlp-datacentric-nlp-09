@@ -1,0 +1,15 @@
+data/raw/*
+!data/raw/.gitkeep
+data/preprocessed/*
+!data/preprocessed/.gitkeep
+data/augmented/*
+!data/augmented/.gitkeep
+data/final/*
+!data/final/.gitkeep
+
+output/*
+!output/.gitkeep
+
+wandb
+
+*.csv
