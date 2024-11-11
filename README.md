@@ -26,7 +26,7 @@ Each branch (`main`, `pipeline1`, `pipeline2`, `pipeline3`) specifies the exact 
 
 ### 2. Data
 
-![스크린샷 2024-10-28 오후 5.18.05.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b1dce0c2-a152-44e2-bf4a-278dfea60250/72aa2ed2-e73e-493b-8cc3-807dab22a56e/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-10-28_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_5.18.05.png)
+<img width="1095" alt="dd" src="https://github.com/user-attachments/assets/1967ea1b-9eef-477b-ac05-81a7d8e145f3">
 
 - **Data attribute :** The random noise and labeling noise are mutually exclusive.
 - **Test Dataset :** consists of 30,000 data points, each containing an ID and Text.
@@ -78,7 +78,7 @@ To assess model performance, the following metrics are used:
 
 ### 5. Results
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b1dce0c2-a152-44e2-bf4a-278dfea60250/0752e147-b102-498f-bb2a-c0f6e15be5e2/image.png)
+![image](https://github.com/user-attachments/assets/05f65884-ce0e-477d-bc57-84bedc092cbf)
 
 - Accuracy: 84.20%
 - macro F1 Score: 84.05%
