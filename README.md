@@ -6,7 +6,7 @@ The KLUE-Topic Classification benchmark focuses on classifying the topic of a ne
 
 In alignment with the data-centric approach, participants must improve model performance solely through data modification without altering the baseline model code. Use of paid API services is prohibited. Any modifications to the baseline code will result in disqualification from the leaderboard post-competition review.
 
-Wrap-up Reports : [More]([https://drive.google.com/drive/u/0/folders/19lW_Dohoj2oBXjuhOV6JOjhfx69MCznU](https://github.com/boostcampaitech7/level2-nlp-datacentric-nlp-09/blob/main/A%20Data-Centric%20Approach%20for%20Classifying%20Text%20Topics.pdf))
+Wrap-up Reports : [More]([https://github.com/boostcampaitech7/level2-nlp-datacentric-nlp-09/blob/main/A%20Data-Centric%20Approach%20for%20Classifying%20Text%20Topics.pdf])
 <br>
 <br>
 
